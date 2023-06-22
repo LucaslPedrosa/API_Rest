@@ -1,4 +1,4 @@
-import { RequestHandler } from 'express';
+import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import * as yup from 'yup';
 import { validation } from '../../shared/middleware';
@@ -24,10 +24,12 @@ export const createValidation = validation({
     name: yup.string().required().min(3),
   })
 
-});
+}); 
 
-export const create = async (req, res) => {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const create = async  (req : Request<{},{},ICity>, res: Response) => {
+  
   console.log(req.body);
 
-  return res.status(StatusCodes.ACCEPTED).send(`City ${req.body.name} created!`);
+  return res.status(StatusCodes.ACCEPTED).send('Create!');
 };
