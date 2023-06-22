@@ -1,18 +1,17 @@
-import { Router } from 'express';
+import { Request, Response, Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
+
+import { CitiesController } from './../controllers';
+
 
 const router = Router();
 
-
-
-router.get('/', (req, res) => {
+const f = function(req : Request, res : Response) {
   return res.send('Ola mudos');
-});
+};
 
-router.post('/test', (req, res) => {
-  console.log(req.cookies);  
-  res.status(StatusCodes.UNAUTHORIZED).send('ola mudos');
-  return 0;
-});
+router.get('/', f);
+
+router.post('/cities', CitiesController.createValidation, CitiesController.create);
 
 export {router};
