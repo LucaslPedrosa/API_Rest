@@ -21,12 +21,11 @@ export const createValidation = validation({
   }),
 
   query: yup.object().shape({
-    name: yup.string().required().min(3),
+    filter: yup.string().required().min(3),
   })
 
 }); 
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 export const create = async  (req : Request<{},{},ICity>, res: Response) => {
   
   console.log(req.body);
