@@ -4,11 +4,19 @@ import * as yup from 'yup';
 
 
 type TProperty = 'header' | 'body' | 'params' | 'query';
+
+type TGetSchema = <T>(schema : yup.Schema<T>) => yup.Schema<T>;
+
 type TAllSchemas = Record<TProperty, yup.Schema<any>>;
-type TValidation = (schemas: Partial<TAllSchemas>) => RequestHandler;
 
-export const validation: TValidation = (schemas) => async (req, res, next) => {
+type TGetAllSchemas = (schemas: TGetSchema) => Partial<TAllSchemas>;
 
+type TValidation = (schemas: TGetAllSchemas) => RequestHandler;
+
+
+export const validation: TValidation = (getAllSchemas) => async (req, res, next) => {
+
+  const schemas = getAllSchemas((schema) => schema);
 
   const errorsResult: Record<string, Record<string, string>> = {};
 
