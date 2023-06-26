@@ -5,9 +5,9 @@ import * as yup from 'yup';
 
 type TProperty = 'header' | 'body' | 'params' | 'query';
 
-type TGetSchema = <T>(schema : yup.Schema<T>) => yup.Schema<T>;
+type TGetSchema = <T extends yup.Maybe<yup.AnyObject>>(schema : yup.ObjectSchema<T>) => yup.ObjectSchema<T>;
 
-type TAllSchemas = Record<TProperty, yup.Schema<any>>;
+type TAllSchemas = Record<TProperty, yup.ObjectSchema<any>>;
 
 type TGetAllSchemas = (schemas: TGetSchema) => Partial<TAllSchemas>;
 
@@ -27,7 +27,7 @@ export const validation: TValidation = (getAllSchemas) => async (req, res, next)
 
       const yError = error as yup.ValidationError;
       const ValidationErrors: Record<string, string> = {};
-
+      
       yError.inner.forEach((error) => {
         if (error.path === undefined) return;
         ValidationErrors[error.path] = error.message;
