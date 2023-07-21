@@ -19,7 +19,9 @@ export const getByIdValidation = validation((getSchema) => ({
 
 export const getById = async (req: Request<IParamProps>, res: Response) => {
 
-  console.log(req.params);
+  if(Number(req.params.id) === 99999){
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ errors: { default: 'Error' } });
+  }
 
-  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('Not implemented');
+  return res.status(StatusCodes.OK).json({ id: 1, name: 'Not implemented'});
 };
