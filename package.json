@@ -28,7 +28,11 @@
   },
   "scripts": {
     "start": "ts-node-dev ./src/index.ts",
-    "go": "node ./build/index.js",
+    "postinstall" : "tsc",
+    "production" : "node ./build/index.js",
     "test": "jest"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
